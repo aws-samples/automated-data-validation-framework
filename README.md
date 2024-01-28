@@ -76,35 +76,37 @@ This template creates an EMR cluster with a bootstrap script to copy Griffin-rel
 14.	On the Review page, select I acknowledge that AWS CloudFormation might create IAM resources with custom names.
 15.	Choose Create stack.
 
-You can view the stack outputs on the console or by using the following AWS CLI command:
+	You can view the stack outputs on the console or by using the following AWS CLI command:
 
-aws cloudformation describe-stacks --stack-name <stack-name> --region us-east-1 --query Stacks[0].Outputs 
+	aws cloudformation describe-stacks --stack-name <stack-name> --region us-east-1 --query Stacks[0].Outputs 
 
-It takes approximately 5 minutes for the deployment to complete. When the stack is complete, you should see the EMRCluster resource launched and available in your account. 
+	It takes approximately 5 minutes for the deployment to complete. When the stack is complete, you should see the EMRCluster resource launched and available in your account. 
 
-When the EMR cluster is launched, it runs the following steps as part of the post-cluster launch:
+	When the EMR cluster is launched, it runs the following steps as part of the post-cluster launch:
 
-•	Bootstrap action – Installs the Griffin JAR file and directories for this framework. It also downloads sample data files to use in the next step.
-•	Athena_Table_Creation – Creates tables in Athena to read the result reports. 
-•	Count_Validation – Runs the job to compare the data count between source and target data from the AWS Glue Data Catalog table and store the results in an S3 bucket, which will be read via an Athena table.
-•	Accuracy – Runs the job to compare the data rows between the source and target data from the AWS Glue Data Catalog table and store the results in an S3 bucket, which will be read via the Athena table.
+	•	Bootstrap action – Installs the Griffin JAR file and directories for this framework. It also downloads sample data files to use in the next step.
+	•	Athena_Table_Creation – Creates tables in Athena to read the result reports. 
+	•	Count_Validation – Runs the job to compare the data count between source and target data from the AWS Glue Data Catalog table and store the results in an S3 bucket, which will be read via an Athena table.
+	•	Accuracy – Runs the job to compare the data rows between the source and target data from the AWS Glue Data Catalog table and store the results in an S3 bucket, which will be read via the Athena table.
 
 	![visual1](./img/visual6.png)
 
-When the EMR steps are complete, your table comparison is done and ready to view in Athena automatically. No manual intervention is needed for validation.
+	When the EMR steps are complete, your table comparison is done and ready to view in Athena automatically. No manual intervention is needed for validation.
 
-The following screenshots are a preview of sample data from the source and target table comparison.
+	The following screenshots are a preview of sample data from the source and target table comparison.
 
-Validate data with Python Griffin
-When your EMR cluster is ready and all the jobs are complete, it means the count validation and data validation are complete. The results have been stored in Amazon S3 and the Athena table is already created on top of that. You can query the Athena tables to view the results, as shown in the following screenshot.
+	Validate data with Python Griffin
 
-Verify data validation results with Athena
-The following screenshot shows the count results for all tables.
+	When your EMR cluster is ready and all the jobs are complete, it means the count validation and data validation are complete. The results have been stored in Amazon S3 and the Athena table is already created on top of that. You can query the Athena tables to view the results, as shown in the following screenshot.
+
+	Verify data validation results with Athena
+	
+	The following screenshot shows the count results for all tables.
 
 	![visual1](./img/visual2.png)
 
 
-The following screenshot shows the data accuracy results for all tables.
+	The following screenshot shows the data accuracy results for all tables.
 
 	![visual1](./img/visual3.png)
        
