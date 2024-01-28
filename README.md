@@ -37,10 +37,10 @@ Only initial effort is to setup this framework and create config files which has
 1.	Create an S3 bucket in your AWS account called bdb-3070-griffin-datavalidation-blog-${AWS::AccountId}-${AWS::Region} (provide your AWS account ID and AWS Region).
 2. Download all the folders and files in this git to your local folder.
 3. Change <bucket name> with the one you created in your account (bdb-3070-griffin-datavalidation-blog-${AWS::AccountId}-${AWS::Region}) in the following files:
-	a.	bootstrap-bdb-3070-datavalidation.sh
-	b.	Validation_Metrics_Athena_tables.hql
-	c.	datavalidation/totalcount/totalcount_input.txt
-	d.	datavalidation/accuracy/accuracy_input.txt
+	-	bootstrap-bdb-3070-datavalidation.sh
+	-	Validation_Metrics_Athena_tables.hql
+	-	datavalidation/totalcount/totalcount_input.txt
+	-	datavalidation/accuracy/accuracy_input.txt
 4. Upload all the folders and files in this .zip file to your S3 bucket:
 	a. aws s3 cp . s3://<bucket_name>/ --recursive
 5.	Run the following CloudFormation template in your account.
@@ -54,7 +54,7 @@ Only initial effort is to setup this framework and create config files which has
 9.	Choose Create stack.
 
 
-	You can view the stack outputs on the AWS Management Console or by using the following AWS Command Line Interface (AWS CLI) command:
+	-	You can view the stack outputs on the AWS Management Console or by using the following AWS Command Line Interface (AWS CLI) command:
 
 	aws cloudformation describe-stacks --stack-name <stack-name> --region us-east-1 --query Stacks[0].Outputs 
 
