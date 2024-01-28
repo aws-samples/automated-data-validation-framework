@@ -1,0 +1,55 @@
+{
+  "name": "total_count_records",
+  "process.type": "batch",
+  "data.sources": [
+    {
+      "name": "src",
+      "baseline": true,
+      "connectors": [
+        {
+          "type": "hive",
+          "version": "2.3.7",
+          "config": {
+            "database": "srcdb",
+            "table.name": "srctab",
+	    "where":"condition"
+          }
+        }
+      ]
+    },
+	{
+      "name": "tgt",
+      "baseline": true,
+      "connectors": [
+        {
+          "type": "hive",
+          "version": "2.3.7",
+          "config": {
+            "database": "tgtdb",
+            "table.name": "tgttab",
+	    "where":"condition"
+          }
+        }
+      ]
+    }
+  ],
+  "evaluate.rule": {
+    "rules": [
+      {
+        "dsl.type": "spark-sql",
+        "dq.type": "total_count",
+        "out.dataframe.name": "total_count",
+        "rule": "select t1.count1 as Source_Count,t2.count2 as Target_Count from (select count(*) as count1 from src) t1 cross join (select count(*) as count2 from tgt) t2",
+        "out":[
+          {
+            "type":"metric",
+            "name": "total_count"
+          }
+        ]
+      }
+    ]
+  },
+  "sinks": ["CONSOLE", "HDFS"]
+}
+
+

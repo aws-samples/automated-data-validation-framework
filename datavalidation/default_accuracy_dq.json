@@ -1,0 +1,63 @@
+{
+  "name": "batch_accuracy",
+  "process.type": "batch",
+  "data.sources": [
+    {
+      "name": "src",
+      "baseline": true,
+      "connectors": [
+        {
+          "type": "hive",
+          "version": "2.3.7",
+          "config": {
+            "database": "srcdb",
+            "table.name": "srctbl",
+            "where":"condition"
+          }
+        }
+      ]
+    },
+        {
+      "name": "tgt",
+      "baseline": true,
+      "connectors": [
+        {
+          "type": "hive",
+          "version": "2.3.7",
+          "config": {
+            "database": "tgtdb",
+            "table.name": "tgttbl",
+            "where":"condition"
+          }
+        }
+      ]
+    }
+  ],
+  "evaluate.rule": {
+    "rules": [
+      {
+        "dsl.type": "griffin-dsl",
+        "dq.type": "accuracy",
+        "out.dataframe.name": "accu",
+        "rule": "dynamicrule",
+        "details": {
+          "source": "src",
+          "target": "tgt",
+          "accuracy": "accuracy",
+          "miss": "data_mismatched_records",
+          "total": "source_count",
+          "matched": "data_matched_records",
+          "miss_items": "miss_items"
+        },
+        "out":[
+          {
+            "type":"metric",
+            "name": "accu"
+          }
+        ]
+      }
+    ]
+  },
+  "sinks": ["CONSOLE", "HDFS"]
+}
+

@@ -1,0 +1,25 @@
+{
+  "spark": {
+    "log.level": "WARN"
+  },
+  "sinks": [
+    {
+      "type": "console"
+    },
+    {
+      "type": "hdfs",
+      "config": {
+        "path": "/mnt/griffin/persist/count_accuracy",
+	"max.persist.lines": 10000000,
+        "max.lines.per.file": 10000000
+      }
+    },
+    {
+      "type": "elasticsearch",
+      "config": {
+        "method": "post",
+        "api": "http://es:9200/griffin/count_accuracy"
+      }
+    }
+  ]
+}

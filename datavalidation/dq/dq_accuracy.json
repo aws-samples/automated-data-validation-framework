@@ -1,0 +1,63 @@
+{
+  "name": "batch_accuracy",
+  "process.type": "batch",
+  "data.sources": [
+    {
+      "name": "src",
+      "baseline": true,
+      "connectors": [
+        {
+          "type": "hive",
+          "version": "2.3.7",
+          "config": {
+            "database": "griffin_datavalidation_blog",
+            "table.name": "survery_financial_report_source",
+            "where":"1=1"
+          }
+        }
+      ]
+    },
+        {
+      "name": "tgt",
+      "baseline": true,
+      "connectors": [
+        {
+          "type": "hive",
+          "version": "2.3.7",
+          "config": {
+            "database": "griffin_datavalidation_blog",
+            "table.name": "survery_financial_report_target",
+            "where":"1=1"
+          }
+        }
+      ]
+    }
+  ],
+  "evaluate.rule": {
+    "rules": [
+      {
+        "dsl.type": "griffin-dsl",
+        "dq.type": "accuracy",
+        "out.dataframe.name": "accu",
+        "rule": "src.year = tgt.year and src.industry_aggregation_nzsioc = tgt.industry_aggregation_nzsioc and src.industry_code_nzsioc = tgt.industry_code_nzsioc and src.industry_name_nzsioc = tgt.industry_name_nzsioc and src.units = tgt.units and src.variable_code = tgt.variable_code and src.variable_name = src.variable_name and src.variable_category = tgt.variable_category and src.value = tgt.value and src.industry_code_anzsic06 = tgt.industry_code_anzsic06",
+	"details": {
+          "source": "src",
+          "target": "tgt",
+          "accuracy": "accuracy",
+          "miss": "Data_Mismatched_Records",
+          "total": "Source_Count",
+          "matched": "Data_Matched_Records",
+          "miss_items": "miss_items"
+        },
+        "out":[
+          {
+            "type":"metric",
+            "name": "accu"
+          }
+        ]
+      }
+    ]
+  },
+  "sinks": ["CONSOLE", "HDFS"]
+}
+
