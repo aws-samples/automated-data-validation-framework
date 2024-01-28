@@ -1,0 +1,77 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:                                                                                                       
+# The name of the crawler to be created
+  CFNCrawlerName:  
+    Type: String
+    Default: griffin_data_validation_blog
+  CFNDatabaseName:
+    Type: String
+    Default: griffin_datavalidation_blog
+#
+#
+# Resources section defines metadata for the Data Catalog
+Resources:
+  MyCSVclassifier:
+    Type: 'AWS::Glue::Classifier'
+    Properties:
+      CsvClassifier:
+        ContainsHeader: PRESENT
+        Delimiter: ','
+        Name: CSV_classifier_blog
+        QuoteSymbol: '"'
+#Create IAM Role assumed by the crawler. For demonstration, this role is given all permissions.
+  CFNRolecrawler:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: "Allow"
+            Principal:
+              Service:
+                - "glue.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Path: "/"
+      ManagedPolicyArns:
+        ['arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole']      
+      Policies:
+        -
+          PolicyName: "root"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: "Allow"
+                Action:
+                  - 's3:GetObject'
+                  - 's3:PutObject'
+                Resource: "arn:aws:s3:::bdb-3070-griffin-datavalidation-blog*"
+ # Create a database to contain tables created by the crawler
+  CFNDatabaseData:
+    Type: AWS::Glue::Database
+    Properties:
+      CatalogId: !Ref AWS::AccountId
+      DatabaseInput:
+        Name: !Ref CFNDatabaseName
+        Description: "AWS Glue container to hold metadata tables for the crawler"
+ #Create a crawler to crawl the data on a S3 bucket
+  CFNCrawData:
+    Type: AWS::Glue::Crawler
+    Properties:
+      Name: !Ref CFNCrawlerName
+      Role: !GetAtt CFNRolecrawler.Arn
+      Classifiers: 
+        - !Ref MyCSVclassifier
+      Description: AWS Glue crawler to crawl data
+      #Schedule: none, use default run-on-demand
+      DatabaseName: !Ref CFNDatabaseName
+      Targets:
+        S3Targets:
+          # Public S3 bucket with the data
+          - Path: !Sub "s3://bdb-3070-griffin-datavalidation-blog-${AWS::AccountId}-${AWS::Region}/data"
+      SchemaChangePolicy:
+        UpdateBehavior: "UPDATE_IN_DATABASE"
+        DeleteBehavior: "LOG"
+      Configuration: "{\"Version\":1.0,\"CrawlerOutput\":{\"Partitions\":{\"AddOrUpdateBehavior\":\"InheritFromTable\"},\"Tables\":{\"AddOrUpdateBehavior\":\"MergeNewColumns\"}}}"
