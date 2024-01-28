@@ -84,10 +84,10 @@ Only initial effort is to setup this framework and create config files which has
 
 	When the EMR cluster is launched, it runs the following steps as part of the post-cluster launch:
 
-	•	Bootstrap action – Installs the Griffin JAR file and directories for this framework. It also downloads sample data files to use in the next step.
-	•	Athena_Table_Creation – Creates tables in Athena to read the result reports. 
-	•	Count_Validation – Runs the job to compare the data count between source and target data from the AWS Glue Data Catalog table and store the results in an S3 bucket, which will be read via an Athena table.
-	•	Accuracy – Runs the job to compare the data rows between the source and target data from the AWS Glue Data Catalog table and store the results in an S3 bucket, which will be read via the Athena table.
+	-	Bootstrap action – Installs the Griffin JAR file and directories for this framework. It also downloads sample data files to use in the next step.
+	-	Athena_Table_Creation – Creates tables in Athena to read the result reports. 
+	-	Count_Validation – Runs the job to compare the data count between source and target data from the AWS Glue Data Catalog table and store the results in an S3 bucket, which will be read via an Athena table.
+	-	Accuracy – Runs the job to compare the data rows between the source and target data from the AWS Glue Data Catalog table and store the results in an S3 bucket, which will be read via the Athena table.
 
 	![visual1](./img/visual6.png)
 
