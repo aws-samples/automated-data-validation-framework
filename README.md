@@ -54,21 +54,21 @@ Only initial effort is to setup this framework and create config files which has
 9.	Choose Create stack.
 
 
-You can view the stack outputs on the AWS Management Console or by using the following AWS Command Line Interface (AWS CLI) command:
+	You can view the stack outputs on the AWS Management Console or by using the following AWS Command Line Interface (AWS CLI) command:
 
-aws cloudformation describe-stacks --stack-name <stack-name> --region us-east-1 --query Stacks[0].Outputs 
+	aws cloudformation describe-stacks --stack-name <stack-name> --region us-east-1 --query Stacks[0].Outputs 
 
 10.	Run the AWS Glue crawler and verify that six tables have been created in the AWS Glue Data Catalog.
 11.	Run the following CloudFormation template in your account - Griffin_Data_Validation_EMR_Cluster.yml
 
 
-This template creates an EMR cluster with a bootstrap script to copy Griffin-related JARs and artifacts. It also runs three EMR steps:
+	This template creates an EMR cluster with a bootstrap script to copy Griffin-related JARs and artifacts. It also runs three EMR steps:
 
-•	Create two Athena tables and two Athena views to see the validation matrix produced by the Griffin framework
-•	Run count validation for all three tables to compare between the source and target table
-•	Run record-level and column-level validations for all three tables to compare between the source and target table
+	•	Create two Athena tables and two Athena views to see the validation matrix produced by the Griffin framework
+	•	Run count validation for all three tables to compare between the source and target table
+	•	Run record-level and column-level validations for all three tables to compare between the source and target table
 
-12.	Choose Next.
+12.	Choose Next and fill your environment EC2 Public subnet ID.
 
 	![visual1](./img/visual5.png)
 
