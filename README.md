@@ -34,17 +34,17 @@ Only initial effort is to setup this framework and create config files which has
 
 ## Deploy the solution:
 
-1.	Create an S3 bucket in your AWS account called bdb-3070-griffin-datavalidation-blog-${AWS::AccountId}-${AWS::Region} (provide your AWS account ID and AWS Region).
-2. Download all the folders and files in this git to your local folder.
+1. Create an S3 bucket in your AWS account called bdb-3070-griffin-datavalidation-blog-${AWS::AccountId}-${AWS::Region} (provide your AWS account ID and AWS Region).
+2. Clone this GITHUB repo to your local folder.
 3. Change <bucket name> with the one you created in your account (bdb-3070-griffin-datavalidation-blog-${AWS::AccountId}-${AWS::Region}) in the following files:
 	-	bootstrap-bdb-3070-datavalidation.sh
 	-	Validation_Metrics_Athena_tables.hql
 	-	datavalidation/totalcount/totalcount_input.txt
 	-	datavalidation/accuracy/accuracy_input.txt
-4. Upload all the folders and files in this .zip file to your S3 bucket:
+4. Upload all the folders and files from your local folder to your newly created S3 bucket:
 	a. aws s3 cp . s3://<bucket_name>/ --recursive
-5.	Run the following CloudFormation template in your account.
-	a. The CloudFormation template creates a database called griffin_datavalidation_blog and an AWS Glue crawler called griffin_data_validation_blog on top of the data folder in the .zip file
+5.	Run the following CloudFormation template in your account - Griffin_DataValidation_Blog_GlueCrawler_CFN.yml
+	a. The CloudFormation template creates a database called griffin_datavalidation_blog and an AWS Glue crawler called griffin_data_validation_blog on top of the data folder .
 6. Choose Next.
 
    ![visual1](./img/visual4.png)
