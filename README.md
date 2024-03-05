@@ -109,6 +109,24 @@ Only initial effort is to setup this framework and create config files which has
 	The following screenshot shows the data accuracy results for all tables.
 
 	![visual1](./img/visual3.png)
+
+	The following screenshot shows the file created for each table with mismatched records. 
+	
+	• Individual folders are generated for each table directly from the job.
+
+	![visual1](./img/visual11.png)
+
+	• Every table folder will contain a directory for each day the job is executed.
+
+	![visual1](./img/visual12.png)
+
+	• Within that specific date, there exists a file named "__missRecords" that contains records that do not match.
+
+	![visual1](./img/visual13.png)
+
+	• Finally, below are the contents of the __missRecords file.
+
+	![visual1](./img/visual14.png)
        
 ## Security
 
